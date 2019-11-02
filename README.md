@@ -22,7 +22,7 @@ python -m pip install kivy==1.11.1
 ```
 5. Install application associated packages
 ```
-python install tensorflow==1.14 regex
+python -m pip install tensorflow==1.14 regex
 ```
 
 ### Linux
@@ -48,5 +48,5 @@ pip3 install tensorflow==1.14 regex
 enter GPT2_models/ and type:
 ```
 pip3 install requests tqdm  // for execute download.py
-python3 download_model.py PrettyBig
+python(3) download_model.py PrettyBig
 ```
