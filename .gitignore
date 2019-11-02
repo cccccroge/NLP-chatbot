@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# For GPT2-models
+GPT2_models/PrettyBig
