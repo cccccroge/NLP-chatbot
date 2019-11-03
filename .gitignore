@@ -108,3 +108,6 @@ GPT2_models/PrettyBig
 
 # VS code files
 .vscode
+
+# venv
+venv_ubuntu1910/
