@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "kivy_venv\\Scripts\\python.exe",
+    "python.pythonPath": "venv_ubuntu1910/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

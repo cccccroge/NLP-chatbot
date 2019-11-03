@@ -22,17 +22,22 @@ python -m pip install kivy==1.11.1
 ```
 5. Install application associated packages
 ```
-python -m pip install tensorflow==1.14 regex
+python -m pip install tensorflow==1.15 regex
 ```
 
 ### Linux
 [official guide from Kivy.org](https://kivy.org/doc/stable/installation/installation-linux.html)
-1. Install Python 3.7
+1. Install Python 3.7 and pip
+```
+sudo apt-get update
+sudo apt-get install python3-pip
+
+```
 2. Setup pip, wheel, virtualenv (note that wheel in linux might run into issues)
 ```
 python3 -m pip install --upgrade --user pip setuptools virtualenv
-python3 -m virtualenv ~/kivy_venv   // create virtual env in home directory
-source ~/kivy_venv/bin/activate	// activate virtual env.
+python3 -m virtualenv ./[your_worn_venv]   // create virtual env at project root
+source [your_worn_venv]/bin/activate	// activate virtual env.
 ```
 3. Install Kivy
 ```
@@ -40,7 +45,7 @@ pip3 install kivy
 ```
 4. Install application associated packages
 ```
-pip3 install tensorflow==1.14 regex
+pip3 install tensorflow==1.15 regex
 ```
 
 ## Language model setup
