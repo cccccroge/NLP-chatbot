@@ -10,7 +10,7 @@ An easy NLP application running on Android system, mainly focus on helping stude
 ```
 python -m pip install --upgrade pip wheel setuptools virtualenv	// install
 python -m virtualenv [your virtual environment name]		// create virtual env. (you don't need to execute this one, the project already has a virtual env.)
-[your virtual environment name]\Scripts\activate	// activate virtual env.
+source [your virtual environment name]\Scripts\activate	// activate virtual env.
 ```
 3. Install the dependencies for Kivy
 ```
@@ -22,7 +22,7 @@ python -m pip install kivy==1.11.1
 ```
 5. Install application associated packages
 ```
-python -m pip install tensorflow==1.15 regex
+python -m pip install tensorflow==1.14 regex
 ```
 
 ### Linux
@@ -45,7 +45,7 @@ pip3 install kivy
 ```
 4. Install application associated packages
 ```
-pip3 install tensorflow==1.15 regex
+pip3 install tensorflow==1.14 regex
 ```
 
 ## Language model setup
