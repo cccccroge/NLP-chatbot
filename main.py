@@ -5,6 +5,7 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
+from kivy.uix.layout import Layout
 from gpt2_pirate import Our_gpt2
 
 

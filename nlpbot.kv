@@ -1,12 +1,25 @@
 #:kivy 1.11.1
 
 <MainWindow>:
-    BoxLayout:
-        orientation: 'horizontal'
-        Button:
-            text: 'A'
-        Button:
-            text: 'B'
-        Button:
-            text: 'C'
+    RelativeLayout:
+        center: (root.width / 2, root.height / 2)
+        padding: 50
+        
+        BoxLayout:
+            orientation: 'vertical'
+
+            TextInput:
+                text: 'text here422413254351351654135135432145'
+                
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 10
+                spacing: 10
+
+                Button:
+                    text: 'A'
+                Button:
+                    text: 'B'
+                Button:
+                    text: 'C'
                 
