@@ -1,30 +1,74 @@
 #:kivy 1.11.1
 
 <MainWindow>:
+    # For access in python code
+    hint_layout: hint_layout
+    functions_layout: functions_layout
+
+    # Background Color
+    canvas.before:
+        Color:
+            rgba: 242./255, 242./255, 242./255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     RelativeLayout:
         size: (root.width , root.height)
+        
+        # Background image
+        AsyncImage:
+            source: 'rsc/robot.gif'
+            anim_delay: 0.08
+            mipmap: True
+            allow_stretch: True
+            on_touch_up: root.on_click_bot()
         
         BoxLayout:
             orientation: 'vertical'
 
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint: (1.0, 0.8)
-                padding: 50
+            # Hint / Output
+            AnchorLayout:
+                id: hint_layout
+                anchor_x: 'center'
+                anchor_y: 'center'
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: (0.6, 0.8)
+                    padding: 100
 
-                TextInput:
-                    text: 'text here422413254351351654135135432145'
+                    Label:
+                        canvas.before:
+                            Color:
+                                rgba: 50./255, 70./255, 120./255, 0.95
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        text: 'Hello, welcome back!\nHow can I help you?'
+                        font_size: '24sp'
+                        color: (230./255, 230./255, 1.0, 1.0)
+                        halign: 'center'
+                        valign: 'center'
+                        on_touch_down: root.on_click_hint()
                     
-                    
-            BoxLayout:
-                orientation: 'horizontal'
-                padding: 50
-                spacing: 10
-                size_hint_y: 0.2
 
-                Button:
-                    text: 'A'
-                Button:
-                    text: 'B'
-                Button:
-                    text: 'C'
+                    
+            # Functions
+            AnchorLayout:
+                id: functions_layout
+                anchor_x: 'center'
+                anchor_y: 'center'
+                size_hint_y: 0.3
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    padding: 50
+                    spacing: 50
+                    size_hint_x: 0.8
+
+                    Button:
+                        text: 'A'
+                    Button:
+                        text: 'B'
+                    Button:
+                        text: 'C'
