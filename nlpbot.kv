@@ -2,19 +2,25 @@
 
 <MainWindow>:
     RelativeLayout:
-        center: (root.width / 2, root.height / 2)
-        padding: 50
+        size: (root.width , root.height)
         
         BoxLayout:
             orientation: 'vertical'
 
-            TextInput:
-                text: 'text here422413254351351654135135432145'
-                
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (1.0, 0.8)
+                padding: 50
+
+                TextInput:
+                    text: 'text here422413254351351654135135432145'
+                    
+                    
             BoxLayout:
                 orientation: 'horizontal'
-                padding: 10
+                padding: 50
                 spacing: 10
+                size_hint_y: 0.2
 
                 Button:
                     text: 'A'
@@ -22,4 +28,3 @@
                     text: 'B'
                 Button:
                     text: 'C'
-                
