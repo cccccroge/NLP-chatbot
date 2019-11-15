@@ -1,4 +1,5 @@
 #:kivy 1.11.1
+#:import ew kivy.uix.effectwidget
 
 <MainWindow>:
     # For access in python code
@@ -20,12 +21,14 @@
         size: (root.width , root.height)
         
         # Background image
-        AsyncImage:
-            source: 'rsc/robot.gif'
-            anim_delay: 0.08
-            mipmap: True
-            allow_stretch: True
-            on_touch_up: root.on_click_bot()
+        EffectWidget:
+            effects: [ew.PixelateEffect()]
+            AsyncImage:
+                source: 'rsc/robot.gif'
+                anim_delay: 0.08
+                mipmap: True
+                allow_stretch: True
+                on_touch_up: root.on_click_bot()
         
         BoxLayout:
             orientation: 'vertical'
