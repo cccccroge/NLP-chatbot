@@ -11,13 +11,9 @@ import multiprocessing
 
 start = timeit.default_timer()
 
-def add1(c):
-    return c + 1
-
 def get_soup(url,header):
-    driver = webdriver.Chrome()
-    r = driver.get(url)
-    return BeautifulSoup(driver.page_source, 'html.parser')
+    r = requests.get(url)
+    return BeautifulSoup(r.content, 'html.parser')
 
 header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
 }

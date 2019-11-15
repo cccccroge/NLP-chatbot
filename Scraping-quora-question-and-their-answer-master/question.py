@@ -8,7 +8,7 @@ from datetime import datetime
 from collections import OrderedDict
 from bs4 import BeautifulSoup
 
-url='https://www.quora.com/search?q=typical+day'
+url='https://www.quora.com/search?q=your+normal+day'
 #browser = webdriver.Firefox()
 chromedriver = r'''C:\Users\Divakar Singh\Downloads\Compressed\chromedriver'''
 browser=webdriver.PhantomJS()
