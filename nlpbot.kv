@@ -2,8 +2,11 @@
 
 <MainWindow>:
     # For access in python code
-    hint_layout: hint_layout
-    functions_layout: functions_layout
+    output_layout: output_layout
+    output_label: output_label
+    functions_layout: functions_layout.__self__
+    input_layout: input_layout.__self__
+    bottom_layout: bottom_layout
 
     # Background Color
     canvas.before:
@@ -27,9 +30,9 @@
         BoxLayout:
             orientation: 'vertical'
 
-            # Hint / Output
+            # Welcome / Output
             AnchorLayout:
-                id: hint_layout
+                id: output_layout
                 anchor_x: 'center'
                 anchor_y: 'center'
                 BoxLayout:
@@ -38,37 +41,60 @@
                     padding: 100
 
                     Label:
+                        id: output_label
                         canvas.before:
                             Color:
                                 rgba: 50./255, 70./255, 120./255, 0.95
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
-                        text: 'Hello, welcome back!\nHow can I help you?'
+                        text: root.message['welcome']
                         font_size: '24sp'
                         color: (230./255, 230./255, 1.0, 1.0)
                         halign: 'center'
                         valign: 'center'
-                        on_touch_down: root.on_click_hint()
+                        on_touch_up: root.on_click_hint()
                     
-
-                    
-            # Functions
             AnchorLayout:
-                id: functions_layout
+                id: bottom_layout
                 anchor_x: 'center'
                 anchor_y: 'center'
-                size_hint_y: 0.3
+                size_hint_y: 0.4
 
+                # Functions
                 BoxLayout:
+                    id: functions_layout
                     orientation: 'horizontal'
                     padding: 50
-                    spacing: 50
-                    size_hint_x: 0.8
+                    spacing: 100
+                    size_hint: (0.8, 0.6)
 
                     Button:
-                        text: 'A'
+                        text: root.message['func_a']
+                        on_press: root.on_click_a()
                     Button:
-                        text: 'B'
+                        text: root.message['func_b']
+                        on_press: root.on_click_b()
                     Button:
-                        text: 'C'
+                        text: root.message['func_c']
+                        on_press: root.on_click_c()
+
+                # hint / inputs
+                BoxLayout:
+                    id: input_layout
+                    orientation: 'vertical'
+                    size_hint_x: 0.6
+                    padding: 50
+                    spacing: 5
+
+                    TextInput:
+
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: (0.15, 0.5)
+                            Button:
+                                text: 'Say it to the bot'
