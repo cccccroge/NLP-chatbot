@@ -25,6 +25,7 @@ class MainWindow(Widget):
     # UI stuff
     top_layout = ObjectProperty(None)
     response_label = ObjectProperty(None)
+    output_label = ObjectProperty(None)
     output_layout = ObjectProperty(None)
     confirm_layout = ObjectProperty(None)
 
@@ -141,8 +142,19 @@ class MainWindow(Widget):
             self.text_input.text = ''
 
             if (self.current_func == 'a'):
+                # GPT-2
+                story = Our_gpt2("GPT2_models/117M.json", None, self.ask_label.text, 40)
+                self.state = "OUTPUT_SHOWN"
+                self.toggleInterface('response', False)
+                self.toggleInterface('output', True)
+                self.output_label.text = story
+            elif (self.current_func == 'b'):
                 time.sleep(3)
-                # DO GPT-2 and wait return
+                self.state = "OUTPUT_SHOWN"
+                self.toggleInterface('response', False)
+                self.toggleInterface('output', True)
+            elif (self.current_func == 'c'):
+                time.sleep(3)
                 self.state = "OUTPUT_SHOWN"
                 self.toggleInterface('response', False)
                 self.toggleInterface('output', True)

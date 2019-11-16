@@ -105,6 +105,7 @@ venv.bak/
 
 # For GPT2-models
 GPT2_models/PrettyBig
+GPT2_models/117M
 
 # VS code files
 .vscode
