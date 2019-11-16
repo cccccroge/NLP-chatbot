@@ -8,5 +8,7 @@ msg = {
     'func_b_hint': 'Say something then I\'ll try my best to guess.',
 
     'func_c': 'I want to share with you what \nhappened today...',
-    'func_c_hint': 'Go ahead!'
+    'func_c_hint': 'Go ahead!',
+
+    'calculate': 'Hmmm, let me see...'
 }
