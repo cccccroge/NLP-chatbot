@@ -3,10 +3,12 @@ kivy.require('1.11.1')
 
 from kivy.app import App
 from kivy.config import Config
+from kivy.core.text import LabelBase
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, OptionProperty, DictProperty
 from gpt2_pirate import Our_gpt2
 from message import msg
+from font import fonts
 
 
 class NLPBotApp(App):
@@ -109,7 +111,12 @@ class MainWindow(Widget):
 
 
 if __name__ == '__main__':
+
     Config.set('graphics', 'fullsreen', 1)
     Config.set('graphics', 'window_state', 'maximized')
     Config.write()
+
+    for font in fonts:
+        LabelBase.register(**font)
+
     NLPBotApp().run()

@@ -7,6 +7,6 @@ msg = {
     'func_b': 'How about guess what I\'m feeling right now?',
     'func_b_hint': 'Say something then I\'ll try my best to guess.',
 
-    'func_c': 'I want to share with you what happened today...',
+    'func_c': 'I want to share with you what \nhappened today...',
     'func_c_hint': 'Go ahead!'
 }

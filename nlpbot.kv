@@ -1,6 +1,21 @@
 #:kivy 1.11.1
 #:import ew kivy.uix.effectwidget
 
+
+<UserButton@Button>:
+    background_normal: 'rsc/button_blue.png'
+    background_down: 'rsc/button_blue_down.png'
+    font_name: 'Cartoon'
+    font_size: 24
+    bold: True
+    color: (56./255, 245./255, 198./255, 1.0)
+
+<BotLabel@Label>:
+    font_name: 'Chrobot'
+    font_size: 36
+    color: (56./255, 245./255, 198./255, 1.0)
+
+
 <MainWindow>:
     # For access in python code
     output_layout: output_layout
@@ -12,7 +27,7 @@
     # Background Color
     canvas.before:
         Color:
-            rgba: 242./255, 242./255, 242./255, 1
+            rgba: 75./255, 49./255, 122./255, 1
         Rectangle:
             pos: self.pos
             size: self.size
@@ -22,10 +37,10 @@
         
         # Background image
         EffectWidget:
-            effects: [ew.PixelateEffect()]
+            #effects: [ew.PixelateEffect(pixel_size = 200)]
             AsyncImage:
-                source: 'rsc/robot.gif'
-                anim_delay: 0.08
+                source: 'rsc/robot_3.gif'
+                anim_delay: 0.04
                 mipmap: True
                 allow_stretch: True
                 on_touch_up: root.on_click_bot()
@@ -38,22 +53,20 @@
                 id: output_layout
                 anchor_x: 'center'
                 anchor_y: 'center'
+
                 BoxLayout:
                     orientation: 'vertical'
-                    size_hint: (0.6, 0.8)
+                    size_hint: (0.6, 1.0)
                     padding: 100
 
-                    Label:
-                        id: output_label
-                        canvas.before:
-                            Color:
-                                rgba: 50./255, 70./255, 120./255, 0.95
+                    BotLabel:
+                        canvas:
                             Rectangle:
+                                source: 'rsc/output.png'
                                 pos: self.pos
                                 size: self.size
+                        id: output_label
                         text: root.message['welcome']
-                        font_size: '24sp'
-                        color: (230./255, 230./255, 1.0, 1.0)
                         halign: 'center'
                         valign: 'center'
                         on_touch_up: root.on_click_hint()
@@ -72,15 +85,15 @@
                     spacing: 100
                     size_hint: (0.8, 0.6)
 
-                    Button:
+                    UserButton:
                         text: root.message['func_a']
-                        on_press: root.on_click_a()
-                    Button:
+                        on_release: root.on_click_a()
+                    UserButton:
                         text: root.message['func_b']
-                        on_press: root.on_click_b()
-                    Button:
+                        on_release: root.on_click_b()
+                    UserButton:
                         text: root.message['func_c']
-                        on_press: root.on_click_c()
+                        on_release: root.on_click_c()
 
                 # hint / inputs
                 BoxLayout:
@@ -99,5 +112,5 @@
                         BoxLayout:
                             orientation: 'horizontal'
                             size_hint: (0.15, 0.5)
-                            Button:
+                            UserButton:
                                 text: 'Say it to the bot'
