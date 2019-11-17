@@ -9,8 +9,10 @@ from kivy.properties import ObjectProperty, OptionProperty, DictProperty
 from gpt2_pirate import Our_gpt2
 from message import msg
 from font import fonts
+from output_format import wrap_text_length
 
 import time
+from threading import Thread
 
 
 class NLPBotApp(App):
@@ -143,21 +145,24 @@ class MainWindow(Widget):
 
             if (self.current_func == 'a'):
                 # GPT-2
-                story = Our_gpt2("GPT2_models/117M.json", None, self.ask_label.text, 40)
-                self.state = "OUTPUT_SHOWN"
-                self.toggleInterface('response', False)
-                self.toggleInterface('output', True)
-                self.output_label.text = story
+                thread_func_a = Thread(
+                    target=self.func_a_concurrent,
+                    args=("GPT2_models/PrettyBig.json", None, self.ask_label.text, 40, ))
+                thread_func_a.start()
+                
             elif (self.current_func == 'b'):
-                time.sleep(3)
-                self.state = "OUTPUT_SHOWN"
-                self.toggleInterface('response', False)
-                self.toggleInterface('output', True)
+                pass
             elif (self.current_func == 'c'):
-                time.sleep(3)
-                self.state = "OUTPUT_SHOWN"
-                self.toggleInterface('response', False)
-                self.toggleInterface('output', True)
+                pass
+
+    def func_a_concurrent(self, json, text_file, text_str, topk):
+        self.output_label.text = wrap_text_length(
+            Our_gpt2(json, text_file, text_str, topk),
+            50)
+        self.state = "OUTPUT_SHOWN"
+        self.toggleInterface('response', False)
+        self.toggleInterface('output', True)
+
 
     def on_click_confirm(self):
         if (self.state == 'OUTPUT_SHOWN'):
