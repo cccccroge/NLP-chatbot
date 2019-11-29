@@ -6,7 +6,7 @@ from kivy.config import Config
 from kivy.core.text import LabelBase
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, OptionProperty, DictProperty
-from gpt2_pirate import Our_gpt2
+from functions import gen_story
 from message import msg
 from font import fonts
 from output_format import wrap_text_length
@@ -18,8 +18,6 @@ from threading import Thread
 class NLPBotApp(App):
 
     def build(self):
-        #message = Our_gpt2("GPT2_models/PrettyBig.json", None, "Daniel Han has just become the new predident of Taiwan.", 40)
-        #return Label(text="This fucking message about fucking min shu is the following.\n" + message)
         return MainWindow()
 
 
@@ -157,8 +155,7 @@ class MainWindow(Widget):
 
     def func_a_concurrent(self, json, text_file, text_str, topk):
         self.output_label.text = wrap_text_length(
-            Our_gpt2(json, text_file, text_str, topk),
-            50)
+            gen_story('sherlock', text_str), 50)
         self.state = "OUTPUT_SHOWN"
         self.toggleInterface('response', False)
         self.toggleInterface('output', True)

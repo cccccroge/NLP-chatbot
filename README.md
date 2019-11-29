@@ -49,9 +49,14 @@ pip3 install tensorflow==1.14 regex
 ```
 
 ## Language model setup
-1. [GPT-2 models download](https://github.com/ConnorJL/GPT2)
+1. (old) [GPT-2 models download](https://github.com/ConnorJL/GPT2)
 enter GPT2_models/ and type:
 ```
 pip3 install requests tqdm  // for execute download.py
 python(3) download_model.py PrettyBig
+```
+
+(new) install GPT-2-simple
+```
+pip install gpt-2-simple
 ```
