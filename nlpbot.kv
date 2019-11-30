@@ -21,6 +21,7 @@
 
     bottom_layout: bottom_layout
     functions_layout: functions_layout.__self__
+    options_layout: options_layout.__self__
     input_layout: input_layout.__self__
     text_input: text_input.__self__
     ask_layout: ask_layout.__self__
@@ -133,6 +134,24 @@
                     UserButton:
                         text: root.message['func_c']
                         on_release: root.on_click_c()
+
+                # func_a options
+                BoxLayout:
+                    id: options_layout
+                    orientation: 'horizontal'
+                    padding: 50
+                    spacing: 100
+                    size_hint: (0.8, 0.6)
+
+                    UserButton:
+                        text: root.message['option_1']
+                        on_release: root.on_click_option1()
+                    UserButton:
+                        text: root.message['option_2']
+                        on_release: root.on_click_option2()
+                    UserButton:
+                        text: root.message['option_3']
+                        on_release: root.on_click_option3()
 
                 # Inputs
                 BoxLayout:

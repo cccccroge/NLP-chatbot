@@ -103,8 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# For GPT2-models
-tf_model/
+# For tensorflow models
+tf_model/*
 
 # VS code files
 .vscode

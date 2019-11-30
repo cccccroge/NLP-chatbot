@@ -31,6 +31,7 @@ class MainWindow(Widget):
 
     bottom_layout = ObjectProperty(None)
     functions_layout = ObjectProperty(None)
+    options_layout = ObjectProperty(None)
     input_layout = ObjectProperty(None)
     text_input = ObjectProperty(None)
     ask_layout = ObjectProperty(None)
@@ -40,7 +41,7 @@ class MainWindow(Widget):
 
     # Function state
     state = OptionProperty("NONE", options=["NONE", "WAIT_SERVE", "HINT_SHOWN", "SELECT_FUNC", \
-    "ENTER_INPUT", "WAIT_OUTPUT", "OUTPUT_SHOWN"])
+    "SELECT_OPTION", "ENTER_INPUT", "WAIT_OUTPUT", "OUTPUT_SHOWN"])
     
 
     def __init__(self, **kwargs):
@@ -48,6 +49,7 @@ class MainWindow(Widget):
         self.hideAll()
         self.state = "WAIT_SERVE"
         self.current_func = None
+        self.current_option = None
 
     def hideAll(self):
         self.top_layout.remove_widget(self.response_label)
@@ -56,6 +58,7 @@ class MainWindow(Widget):
 
         self.toggleInterface('input', False)
         self.toggleInterface('functions', False)
+        self.toggleInterface('options', False)
         self.toggleInterface('ask', False)
 
     def toggleInterface(self, which, on):
@@ -87,6 +90,12 @@ class MainWindow(Widget):
             else:
                 self.bottom_layout.remove_widget(self.functions_layout)
 
+        elif (which == 'options'):
+            if (on):
+                self.bottom_layout.add_widget(self.options_layout)
+            else:
+                self.bottom_layout.remove_widget(self.options_layout)
+
         elif (which == 'ask'):
             if (on):
                 self.bottom_layout.add_widget(self.ask_layout)
@@ -107,13 +116,37 @@ class MainWindow(Widget):
 
     def on_click_a(self):
         if (self.state == "SELECT_FUNC"):
-            self.state = "ENTER_INPUT"
+            self.state = "SELECT_OPTION"
             self.current_func = 'a'
             self.toggleInterface('functions', False)
-            self.toggleInterface('input', True)
+            self.toggleInterface('options', True)
             self.toggleInterface('response', True)
+            self.response_label.text = self.message['func_a_style']
+
+    def on_click_option1(self):
+        if (self.state == "SELECT_OPTION"):
+            self.state = "ENTER_INPUT"
+            self.current_option = '1'
+            self.toggleInterface('options', False)
+            self.toggleInterface('input', True)
             self.response_label.text = self.message['func_a_hint']
 
+    def on_click_option2(self):
+        if (self.state == "SELECT_OPTION"):
+            self.state = "ENTER_INPUT"
+            self.current_option = '2'
+            self.toggleInterface('options', False)
+            self.toggleInterface('input', True)
+            self.response_label.text = self.message['func_a_hint']
+
+    def on_click_option3(self):
+        if (self.state == "SELECT_OPTION"):
+            self.state = "ENTER_INPUT"
+            self.current_option = '3'
+            self.toggleInterface('options', False)
+            self.toggleInterface('input', True)
+            self.response_label.text = self.message['func_a_hint']
+            
     def on_click_b(self):
         if (self.state == "SELECT_FUNC"):
             self.state = "ENTER_INPUT"
@@ -142,10 +175,16 @@ class MainWindow(Widget):
             self.text_input.text = ''
 
             if (self.current_func == 'a'):
-                # GPT-2
+                if (self.current_option == '1'):
+                    mode = 'sherlock'
+                elif (self.current_option == '2'):
+                    mode = 'shakespeare'
+                elif (self.current_option == '3'):
+                    mode = 'mys_island'
+
                 thread_func_a = Thread(
-                    target=self.func_a_concurrent,
-                    args=("GPT2_models/PrettyBig.json", None, self.ask_label.text, 40, ))
+                        target=self.func_a_concurrent,
+                        args=(self.ask_label.text, mode, ))
                 thread_func_a.start()
                 
             elif (self.current_func == 'b'):
@@ -153,9 +192,9 @@ class MainWindow(Widget):
             elif (self.current_func == 'c'):
                 pass
 
-    def func_a_concurrent(self, json, text_file, text_str, topk):
+    def func_a_concurrent(self, text_str, mode):
         self.output_label.text = wrap_text_length(
-            gen_story('sherlock', text_str), 50)
+            gen_story(mode, text_str), 50)
         self.state = "OUTPUT_SHOWN"
         self.toggleInterface('response', False)
         self.toggleInterface('output', True)

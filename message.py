@@ -2,7 +2,11 @@ msg = {
     'welcome': 'Hello, welcome back!\nHow can I help you?',
 
     'func_a': 'Could you tell a story for me?',
-    'func_a_hint': 'Of course I can!\nBut maybe you can start with one or two sentences...',
+    'func_a_hint': 'How about you start with one or two sentences...',
+    'func_a_style': 'Of course I can!\n ...then which style do you prefer?',
+    'option_1': 'Conan Doyle\'s style',
+    'option_2': 'Shakespeare\'s style',
+    'option_3': 'MythIsland\'s style',
 
     'func_b': 'How about guess what I\'m feeling right now?',
     'func_b_hint': 'Say something then I\'ll try my best to guess.',
