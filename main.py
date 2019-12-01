@@ -6,7 +6,7 @@ from kivy.config import Config
 from kivy.core.text import LabelBase
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, OptionProperty, DictProperty
-from functions import gen_story
+from functions import gen_story, identify_emotion
 from message import msg
 from font import fonts
 from output_format import wrap_text_length
@@ -183,18 +183,36 @@ class MainWindow(Widget):
                     mode = 'mys_island'
 
                 thread_func_a = Thread(
-                        target=self.func_a_concurrent,
-                        args=(self.ask_label.text, mode, ))
+                    target=self.func_a_concurrent,
+                    args=(self.ask_label.text, mode, ))
                 thread_func_a.start()
                 
             elif (self.current_func == 'b'):
-                pass
+                thread_func_b = Thread(
+                    target=self.func_b_concurrent,
+                    args=(self.ask_label.text, ))
+                thread_func_b.start()
+
             elif (self.current_func == 'c'):
                 pass
 
     def func_a_concurrent(self, text_str, mode):
         self.output_label.text = wrap_text_length(
             gen_story(mode, text_str), 50)
+        self.state = "OUTPUT_SHOWN"
+        self.toggleInterface('response', False)
+        self.toggleInterface('output', True)
+
+    def func_b_concurrent(self, text_str):
+        emotions = identify_emotion(text_str)
+        print(emotions)
+        text = ''
+        if len(emotions) == 1:
+            text = self.message['func_b_result'] + emotions[0] + '.'
+        elif len(emotions) == 2:
+            text = self.message['func_b_result'] + emotions[0] +\
+                ' and ' + emotions[1] + '.'
+        self.output_label.text = wrap_text_length(text, 30)
         self.state = "OUTPUT_SHOWN"
         self.toggleInterface('response', False)
         self.toggleInterface('output', True)
