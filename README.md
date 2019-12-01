@@ -49,22 +49,19 @@ pip3 install tensorflow==1.14 regex
 ```
 
 ## Language model setup
-1. (old) [GPT-2 models download](https://github.com/ConnorJL/GPT2)
-
-```
-// enter GPT2_models/ and type:
-pip3 install requests tqdm  // for execute download.py
-python(3) download_model.py PrettyBig
-```
-
-(new) install GPT-2-simple
+1. for story telling
 ```
 pip install gpt-2-simple
 ```
-
-2. Bert model
+2. for emotion classification
 ```
 pip install bert-tensorflow
 pip install tensorflow_hub
 pip install pandas
+```
+3. for experience guessing
+```
+pip install pytorch_pretrained_bert
+pip install torch===1.3.1 torchvision===0.4.2 -f https://download.pytorch.org/whl/torch_stable.html
+pip install nltk
 ```
