@@ -220,7 +220,6 @@ class MainWindow(Widget):
     def func_a_concurrent(self, text_str, mode):
         self.output_label.text = wrap_text_length(
             gen_story(mode, text_str), 50)
-        self.output_label.text = 'testestest'
         self.state = "OUTPUT_SHOWN_CONFIRM"
         self.toggleInterface('response', False)
         self.toggleInterface('output_confirm', True)
@@ -241,7 +240,7 @@ class MainWindow(Widget):
         self.toggleInterface('output_confirm', True)
 
     def func_c_concurrent(self, text_str):
-        g1, g2, g3 = guess_diary(text_str, use355M=True, iteration=3)
+        g1, g2, g3 = guess_diary(text_str, use355M=False, iteration=4)
         self.diary_guess_cache = [g1, g2, g3]
         text = wrap_text_length(self.diary_guess_cache[0], 50)
         self.output_label.text = self.message['func_c_guess_1'] + '\n' + text
