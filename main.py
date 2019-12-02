@@ -6,7 +6,7 @@ from kivy.config import Config
 from kivy.core.text import LabelBase
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, OptionProperty, DictProperty
-from functions import gen_story, identify_emotion
+from functions import gen_story, identify_emotion, guess_diary
 from message import msg
 from font import fonts
 from output_format import wrap_text_length
@@ -28,6 +28,8 @@ class MainWindow(Widget):
     output_label = ObjectProperty(None)
     output_layout = ObjectProperty(None)
     confirm_layout = ObjectProperty(None)
+    confirm_confirm_layout = ObjectProperty(None)
+    confirm_choose_layout = ObjectProperty(None)
 
     bottom_layout = ObjectProperty(None)
     functions_layout = ObjectProperty(None)
@@ -41,7 +43,7 @@ class MainWindow(Widget):
 
     # Function state
     state = OptionProperty("NONE", options=["NONE", "WAIT_SERVE", "HINT_SHOWN", "SELECT_FUNC", \
-    "SELECT_OPTION", "ENTER_INPUT", "WAIT_OUTPUT", "OUTPUT_SHOWN"])
+    "SELECT_OPTION", "ENTER_INPUT", "WAIT_OUTPUT", "OUTPUT_SHOWN_CONFIRM", "OUTPUT_SHOWN_CHOOSE"])
     
 
     def __init__(self, **kwargs):
@@ -50,10 +52,13 @@ class MainWindow(Widget):
         self.state = "WAIT_SERVE"
         self.current_func = None
         self.current_option = None
+        self.diary_guess_cache = None
 
     def hideAll(self):
         self.top_layout.remove_widget(self.response_label)
         self.top_layout.remove_widget(self.output_layout)
+        self.confirm_layout.remove_widget(self.confirm_confirm_layout)
+        self.confirm_layout.remove_widget(self.confirm_choose_layout)
         self.top_layout.remove_widget(self.confirm_layout)
 
         self.toggleInterface('input', False)
@@ -69,13 +74,26 @@ class MainWindow(Widget):
             else:
                 self.top_layout.remove_widget(self.response_label)
 
-        elif (which == 'output'):
+        elif (which == 'output_confirm'):
             if (on):
                 self.top_layout.add_widget(self.output_layout)
                 self.top_layout.add_widget(self.confirm_layout)
+                self.confirm_layout.add_widget(self.confirm_confirm_layout)
                 self.top_layout.size_hint_y = 1.0
             else:
                 self.top_layout.remove_widget(self.output_layout)
+                self.confirm_layout.remove_widget(self.confirm_confirm_layout)
+                self.top_layout.remove_widget(self.confirm_layout)
+        
+        elif (which == 'output_choose'):
+            if (on):
+                self.top_layout.add_widget(self.output_layout)
+                self.top_layout.add_widget(self.confirm_layout)
+                self.confirm_layout.add_widget(self.confirm_choose_layout)
+                self.top_layout.size_hint_y = 1.0
+            else:
+                self.top_layout.remove_widget(self.output_layout)
+                self.confirm_layout.remove_widget(self.confirm_choose_layout)
                 self.top_layout.remove_widget(self.confirm_layout)
         
         elif (which == 'input'):
@@ -194,14 +212,18 @@ class MainWindow(Widget):
                 thread_func_b.start()
 
             elif (self.current_func == 'c'):
-                pass
+                thread_func_c = Thread(
+                    target=self.func_c_concurrent,
+                    args=(self.ask_label.text, ))
+                thread_func_c.start()
 
     def func_a_concurrent(self, text_str, mode):
         self.output_label.text = wrap_text_length(
             gen_story(mode, text_str), 50)
-        self.state = "OUTPUT_SHOWN"
+        self.output_label.text = 'testestest'
+        self.state = "OUTPUT_SHOWN_CONFIRM"
         self.toggleInterface('response', False)
-        self.toggleInterface('output', True)
+        self.toggleInterface('output_confirm', True)
 
     def func_b_concurrent(self, text_str):
         emotions = identify_emotion(text_str)
@@ -212,24 +234,53 @@ class MainWindow(Widget):
         elif len(emotions) == 2:
             text = self.message['func_b_result'] + emotions[0] +\
                 ' and ' + emotions[1] + '.'
-        self.output_label.text = wrap_text_length(text, 30)
-        self.state = "OUTPUT_SHOWN"
-        self.toggleInterface('response', False)
-        self.toggleInterface('output', True)
+        self.output_label.text = wrap_text_length(text, 50)
 
+        self.state = "OUTPUT_SHOWN_CONFIRM"
+        self.toggleInterface('response', False)
+        self.toggleInterface('output_confirm', True)
+
+    def func_c_concurrent(self, text_str):
+        g1, g2, g3 = guess_diary(text_str, use355M=True, iteration=3)
+        self.diary_guess_cache = [g1, g2, g3]
+        text = wrap_text_length(self.diary_guess_cache[0], 50)
+        self.output_label.text = self.message['func_c_guess_1'] + '\n' + text
+        self.diary_guess_cache = self.diary_guess_cache[1:]
+
+        self.state = "OUTPUT_SHOWN_CHOOSE"
+        self.toggleInterface('response', False)
+        self.toggleInterface('output_choose', True)
 
     def on_click_confirm(self):
-        if (self.state == 'OUTPUT_SHOWN'):
+        if (self.state == 'OUTPUT_SHOWN_CONFIRM' or self.state == 'OUTPUT_SHOWN_CHOOSE'):
             self.state = 'WAIT_SERVE'
             self.toggleInterface('ask', False)
-            self.toggleInterface('output', False)
-                
+            self.toggleInterface('output_confirm', False)
+    
+    def on_click_yes(self):
+        if (self.state == 'OUTPUT_SHOWN_CHOOSE'):
+            self.toggleInterface('output_choose', False)
+            self.output_label.text = self.message['func_c_robot_win']
+            self.toggleInterface('output_confirm', True)
+        
+    def on_click_no(self):
+        if (self.state == 'OUTPUT_SHOWN_CHOOSE'):
+            guess_time = 4 - len(self.diary_guess_cache)
+            if guess_time <= 3:
+                text = wrap_text_length(self.diary_guess_cache[0], 50)
+                self.output_label.text = self.message['func_c_guess_' + str(guess_time)] +\
+                     '\n' + text
+                self.diary_guess_cache = self.diary_guess_cache[1:]
+
+            else:
+                self.toggleInterface('output_choose', False)
+                self.output_label.text = self.message['func_c_robot_final_say']
+                self.toggleInterface('output_confirm', True)
 
 
     # For debug
     def on_state(self, instance, value):
         print("state beocme: " + value)
-
 
 
 if __name__ == '__main__':

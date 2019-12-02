@@ -16,6 +16,8 @@
     top_layout: top_layout
     output_layout: output_layout.__self__
     confirm_layout: confirm_layout.__self__
+    confirm_confirm_layout: confirm_confirm_layout.__self__
+    confirm_choose_layout: confirm_choose_layout.__self__
     response_label: response_label.__self__
     output_label: output_label.__self__
 
@@ -104,11 +106,24 @@
                         anchor_x: 'center'
                         anchor_y: 'top'
                         BoxLayout:
+                            id: confirm_confirm_layout
                             orientation: 'horizontal'
                             size_hint: (0.15, 1.0)
                             UserButton:
+                                id: confirm_button
                                 text: 'Confirm'
                                 on_release: root.on_click_confirm()
+                        BoxLayout:
+                            id: confirm_choose_layout
+                            orientation: 'horizontal'
+                            size_hint: (0.5, 1.0)
+                            spacing: 50
+                            UserButton:
+                                text: 'Not even close.'
+                                on_release: root.on_click_no()
+                            UserButton:
+                                text: 'Bingo!'
+                                on_release: root.on_click_yes()
 
         
             AnchorLayout:

@@ -1,5 +1,6 @@
 import gpt_2_simple as gpt2
 from emotion_classification import predict
+from diary_guessing import guess
 
 import collections, math
 
@@ -51,9 +52,11 @@ def identify_emotion(input_text):
     top2_type = labels[1][0]
     top2_val = labels[1][1]
 
-    if (top1_val - top2_val) / top1_val < 0.125:
+    if (top1_val - top2_val) / top1_val < 0.5:
         return (top1_type, top2_type)
     else:
         return (top1_type, )
 
 
+def guess_diary(input_text, use355M, iteration):
+    return guess(input_text, use355M, iteration)

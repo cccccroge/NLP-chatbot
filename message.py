@@ -14,6 +14,11 @@ msg = {
 
     'func_c': 'I want to share with you what \nhappened today...',
     'func_c_hint': 'Go ahead!',
+    'func_c_guess_1': 'If I were you, maybe:',
+    'func_c_guess_2': 'Then maybe:',
+    'func_c_guess_3': 'Oh, really? or maybe:',
+    'func_c_robot_win': 'Nail it!',
+    'func_c_robot_final_say': "God! It's really hard to guess what you humanbeings are thinking.",
 
     'calculate': 'Hmmm, let me see...'
 }
