@@ -38,6 +38,8 @@ class MainWindow(Widget):
     text_input = ObjectProperty(None)
     ask_layout = ObjectProperty(None)
     ask_label = ObjectProperty(None)
+
+    robot_image = ObjectProperty(None)
     
     message = DictProperty(msg)
 
@@ -65,6 +67,8 @@ class MainWindow(Widget):
         self.toggleInterface('functions', False)
         self.toggleInterface('options', False)
         self.toggleInterface('ask', False)
+
+        self.robot_image.anim_delay = -1
 
     def toggleInterface(self, which, on):
         if (which == 'response'):
@@ -192,6 +196,9 @@ class MainWindow(Widget):
             self.ask_label.text = self.text_input.text
             self.text_input.text = ''
 
+            self.robot_image.anim_delay = 0.04
+            self.robot_image.anim_loop = 0
+
             if (self.current_func == 'a'):
                 if (self.current_option == '1'):
                     mode = 'sherlock'
@@ -223,6 +230,7 @@ class MainWindow(Widget):
         self.state = "OUTPUT_SHOWN_CONFIRM"
         self.toggleInterface('response', False)
         self.toggleInterface('output_confirm', True)
+        self.robot_image.anim_loop = 1
 
     def func_b_concurrent(self, text_str):
         emotions = identify_emotion(text_str)
@@ -238,6 +246,7 @@ class MainWindow(Widget):
         self.state = "OUTPUT_SHOWN_CONFIRM"
         self.toggleInterface('response', False)
         self.toggleInterface('output_confirm', True)
+        self.robot_image.anim_loop = 1
 
     def func_c_concurrent(self, text_str):
         g1, g2, g3 = guess_diary(text_str, use355M=False, iteration=4)
@@ -249,7 +258,8 @@ class MainWindow(Widget):
         self.state = "OUTPUT_SHOWN_CHOOSE"
         self.toggleInterface('response', False)
         self.toggleInterface('output_choose', True)
-
+        self.robot_image.anim_loop = 1
+        
     def on_click_confirm(self):
         if (self.state == 'OUTPUT_SHOWN_CONFIRM' or self.state == 'OUTPUT_SHOWN_CHOOSE'):
             self.state = 'WAIT_SERVE'
@@ -275,6 +285,29 @@ class MainWindow(Widget):
                 self.toggleInterface('output_choose', False)
                 self.output_label.text = self.message['func_c_robot_final_say']
                 self.toggleInterface('output_confirm', True)
+
+    def on_click_home(self):
+        if (self.state == 'WAIT_SERVE'):
+            pass
+        elif (self.state == 'HINT_SHOWN'):
+            self.toggleInterface('response', False)
+        elif (self.state == 'SELECT_FUNC'):
+            self.toggleInterface('functions', False)
+        elif (self.state == 'SELECT_OPTION'):
+            self.toggleInterface('options', False)
+            self.toggleInterface('response', False)
+        elif (self.state == 'ENTER_INPUT'):
+            self.toggleInterface('input', False)
+            self.toggleInterface('response', False)
+        elif (self.state == 'OUTPUT_SHOWN_CONFIRM'):
+            self.toggleInterface('output_confirm', False)
+            self.toggleInterface('ask', False)
+        elif (self.state == 'OUTPUT_SHOWN_CHOOSE'):
+            self.toggleInterface('output_choose', False)
+            self.toggleInterface('ask', False)
+
+        self.state = 'WAIT_SERVE'
+        return
 
 
     # For debug

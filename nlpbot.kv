@@ -29,6 +29,8 @@
     ask_layout: ask_layout.__self__
     ask_label: ask_label.__self__
 
+    robot_image: robot_image.__self__
+
     # Background Color
     canvas.before:
         Color:
@@ -39,11 +41,22 @@
 
     RelativeLayout:
         size: (root.width , root.height)
+        # Home button
+        AnchorLayout:
+            pos_hint: {'right': 0.56, 'top': 1.4}
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (0.05, 0.08)
+                #padding: 20
+                UserButton:
+                    text: 'HOME'
+                    on_release: root.on_click_home()
         
         # Background image
         EffectWidget:
             #effects: [ew.PixelateEffect(pixel_size = 200)]
             AsyncImage:
+                id: robot_image
                 source: 'rsc/robot_3.gif'
                 anim_delay: 0.04
                 mipmap: True

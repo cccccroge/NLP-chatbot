@@ -12,7 +12,7 @@ msg = {
     'func_b_hint': 'Say something then I\'ll try my best to guess.',
     'func_b_result': 'I think... maybe you feel ',
 
-    'func_c': 'I want to share with you what \nhappened today...',
+    'func_c': 'Could you please guess if you\nwere me, what would you do next?',
     'func_c_hint': 'Go ahead!',
     'func_c_guess_1': 'If I were you, maybe:',
     'func_c_guess_2': 'Then maybe:',

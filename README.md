@@ -61,7 +61,7 @@ pip install pandas
 ```
 3. for experience guessing
 ```
-pip install pytorch_pretrained_bert
 pip install torch===1.3.1 torchvision===0.4.2 -f https://download.pytorch.org/whl/torch_stable.html
+pip install pytorch_pretrained_bert
 pip install nltk
 ```
