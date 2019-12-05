@@ -1,5 +1,19 @@
-# NLP_application
-An easy NLP application running on Android system, mainly focus on helping students to write their life diary in a fun way.
+# NLP Bot
+An easy NLP application running on Windows, using state-of-art deep learning models.
+![demo_image](/images/demo.png)
+
+### 功能
+- 故事生成：選擇生成故事風-->輸入開頭文字-->生成該風格故事段落
+- 情感分析：輸入文字-->回覆可能之情緒（回覆一至兩種，共13種）
+- 經驗猜測：輸入文字-->產生數個可能猜測-->使用者給予回饋（是/否）
+
+### 架構
+![func_1](images/gen_story.jpg)
+![func_2](images/emotion_class.jpg)
+![func_3](images/experience_guess.jpg)
+
+### 注意
+實作上目前僅提供local端的CPU運算，第一個及第三個功能將會花費5分鐘以上的時間
 
 # Project Development
 ## Installation
